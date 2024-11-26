@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display User Info from XML</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Information</h2>
+    <button onclick="loadXML()">Load User Info</button>
+    <div id="userInfo"></div>
+    <script>
+        function loadXML() {
+            const xmlData = `
+                <users>
+                    <user>
+                        <name>John</name>
+                        <email>john@example.com</email>
+                        <age>45</age>
+                    </user>
+                    <user>
+                        <name>assa</name>
+                        <email>dfssdf@example.com</email>
+                        <age>33</age>
+                    </user>
+                    <user>
+                        <name>dsfd sdf</name>
+                        <email>dfssd@example.com</email>
+                        <age>32</age>
+                    </user>
+                </users>
+            `;
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+            const users = xmlDoc.getElementsByTagName("user");
+            let table = `<table>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                </tr>`;
+            for (let i = 0; i < users.length; i++) {
+                const name = users[i].getElementsByTagName("name")[0].textContent;
+                const email = users[i].getElementsByTagName("email")[0].textContent;
+                const age = users[i].getElementsByTagName("age")[0].textContent;
+                table += `<tr>
+                    <td>${name}</td>
+                    <td>${email}</td>
+                    <td>${age}</td>
+                </tr>`;
+            }
+            table += `</table>`;
+            document.getElementById("userInfo").innerHTML = table;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Book Display</title>
+</head>
+<body>
+    <h1>Book Information</h1>
+    <button onclick="loadBooks()">Show Books</button>
+    <div id="bookInfo"></div>
+    <script>
+        function loadBooks() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "books.xml", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const xmlDoc = xhr.responseXML;
+                    const books = xmlDoc.getElementsByTagName("book");
+                    let output = "<ul>";
+                    for (let i = 0; i < books.length; i++) {
+                        const title = books[i].getElementsByTagName("title")[0].textContent;
+                        const author = books[i].getElementsByTagName("author")[0].textContent;
+                        output += `<li><strong>${title}</strong> by ${author}</li>`;
+                    }
+                    output += "</ul>";
+                    document.getElementById("bookInfo").innerHTML = output;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
