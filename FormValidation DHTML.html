@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form Validation</title>
+</head>
+<body>
+    <h1>Registration Form</h1>
+    <form id="registrationForm" onsubmit="return validateForm();">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <button type="submit">Submit</button>
+        <p id="errorMessage" style="color: red;"></p>
+    </form>
+
+    <script>
+        function validateForm() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (!name || !email || !password) {
+                errorMessage.textContent = 'All fields are required!';
+                return false;
+            }
+
+            if (!email.includes('@')) {
+                errorMessage.textContent = 'Enter a valid email address!';
+                return false;
+            }
+
+            errorMessage.textContent = '';
+            alert('Form submitted successfully!');
+            return true;
+        }
+    </script>
+</body>
+</html>
